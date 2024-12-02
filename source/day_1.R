@@ -1,5 +1,5 @@
 #--- Script details ------------------------------------------------------------
-# Creation date: 1 December 2023
+# Creation date: 1 December 2024
 # Project:       aoc23
 # Description:   day_1
 # Author:        Nick Twort
