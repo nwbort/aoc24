@@ -28,29 +28,22 @@ data <- data |>
 #--- Go go go ------------------------------------------------------------------
 
 data <- data |> 
-  separate(value, into = c("a", "b"), sep = " +") |> 
-  mutate(across(everything(), as.integer))
+  separate(value, into = c("a", "b"), sep = " +", convert = TRUE)
 
 #--- Part 1 --------------------------------------------------------------------
 
-tibble(a = sort(data$a), b = sort(data$b)) |> 
-  mutate(diff = abs(a - b)) |> 
-  summarise(s = sum(diff)) |> 
+data |>
+  summarise(s = sum(abs(sort(a)-sort(b)))) |> 
   pull(s) |> 
   as.character() |> 
   writeClipboard()
 
 #--- Part 2 --------------------------------------------------------------------
 
-right_count <- data |> 
-  count(b)
-
 data |> 
-  select(a) |> 
-  left_join(right_count, by = c("a" = "b")) |> 
-  replace_na(list(n = 0)) |> 
-  mutate(score = a * n) |> 
-  summarise(s = sum(score)) |> 
+  count(a = b) |> 
+  inner_join(data) |> 
+  summarise(s = sum(a * n)) |> 
   pull(s) |> 
   as.character() |> 
   writeClipboard()
